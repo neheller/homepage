@@ -4,6 +4,7 @@ div#header {
 
 div#header h1 {
 	font-size: 2.2em;
+	color: rgb(80,80,80);
 }
 
 nav {
@@ -20,7 +21,7 @@ nav ul {
 
 nav ul li {
 	display:inline-block;
-	padding:5px 15px;
+	padding:8px 15px;
 	width:85px;
 }
 
@@ -29,7 +30,6 @@ nav ul li a {
 	border-left:none;
 	border-right:none;
 	padding: 10px;
-	border-color:white;
 	text-decoration:none;
 	color:rgb(100,100,100);
 	-webkit-transition: border-color 0.3s, padding 0.3s, color 0.3s;
@@ -46,8 +46,13 @@ nav ul li a:hover {
 }
 
 div#page_cont {
-	width:70%;
+	width:95%;
+	max-width:800px;
 	margin: 0 auto;
+}
+div#page_cont h1 {
+	font-size: 1.5em;
+	color: rgb(80,80,80);
 }
 div#page_cont a {
 	color: green;
@@ -61,15 +66,29 @@ div.side_cont {
 div#left_cont {
 	display:inline-block;
 	width:30%;
-}
-div#left_cont p {
-	display:inline-block;
-	width:80%;
 	text-align: right;
+}
+
+div#left_cont p, div#left_cont h1{
+	width:80%;
 	margin: inherit auto;
 }
 
 div#right_cont {
 	display:inline-block;
 	width:70%;
+}
+
+div#right_cont h1.not_first {
+	margin-top:30px;
+}
+
+@media screen and (max-width: 570px) {
+	div#left_cont {
+		width:100%;
+		text-align:left;
+	}
+	div#right_cont {
+		width:100%;
+	}
 }
