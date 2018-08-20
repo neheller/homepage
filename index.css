@@ -1,3 +1,8 @@
+body {
+	padding-bottom: 500px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 div#header {
 	text-align: center;
 }
@@ -33,6 +38,7 @@ nav ul li a {
 	text-decoration:none;
 	color:rgb(100,100,100);
 	-webkit-transition: border-color 0.3s, padding 0.3s, color 0.3s;
+	margin:0 auto;
 }
 
 nav ul li a.sel {
@@ -40,9 +46,11 @@ nav ul li a.sel {
 }
 
 nav ul li a:hover {
+	border-width: 2px;
 	border-color: green;
 	color:green;
-	padding: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 div#page_cont {
@@ -58,6 +66,30 @@ div#page_cont a {
 	color: green;
 	text-decoration: none;
 }
+div#page_cont h2 {
+	font-size: 1.3em;
+	color: rgb(80,80,80);
+}
+
+p.pub span.title {
+	font-size: 1.25em;
+	color: rgb(60,60,60);
+}
+p.pub span.authors {
+	font-size: 0.8em;
+}
+p.pub span.authors span.me {
+	font-weight: bold;
+}
+p.pub span.venue {
+	font-size: 0.8em;
+	line-height:200%;
+}
+p.pub span.anchor{
+	font-size: 0.9em;
+	color: rgb(90,90,90);
+}
+
 
 div.side_cont {
 	vertical-align: top;
