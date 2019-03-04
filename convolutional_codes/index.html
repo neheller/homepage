@@ -1,0 +1,460 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Convolutional Codes</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="jquery-3.3.1.min.js"></script>
+        <script src="polys.js" type="text/javascript"></script>
+        <script src="convolutional_codes.js" type="text/javascript"></script>
+        <script src="script.js" type="text/javascript"></script>
+    </head>
+    <body>
+
+        <h1>Convolutional Codes</h1>
+        <p class="tld">In this document, I will attempt to visually explain the 
+        encoding and decoding of convolutional codes, along with how their 
+        properties tend to relate to their design.</p>
+
+        <div class="content">
+
+            <h2>Overview</h2>
+            <p class="text_block">
+                <em>Convolutional codes</em> were introduced in 1955 by Peter 
+                Elias, and have become widely used in wireless communication.
+                Despite the fact that they are rapidly losing ground to the
+                more recently proposed <em>turbo codes</em>, they remain an
+                interesting topic to study due to their intuitive nature and
+                historical importance.
+            </p>
+            <p class="text_block">
+                Convolutional codes differ from codes that we studied in class
+                in that they send <em>only</em> the parity bits, where codes 
+                like the Hamming 7,4 had data bits interspersed. Convolutional
+                codes are defined by three things: a 
+                <em>constraint length</em>, 
+                <img src="math/yd9hlhrj.png" />, 
+                an <em>inverse rate</em>, 
+                <img src="math/375ggas.png" />, 
+                and a collection of 
+                <img src="math/375ggas.png" />
+                polynomials, 
+                <img src="math/yc2k3dnz.png" 
+                style="vertical-align: middle;"/>.
+            </p>
+
+            <h2>Encoding</h2>
+            <p class="text_block">
+                Essentially, the parity bits are encoded by each of the 
+                polynomials acting on a <em>sliding window</em> of 
+                <img src="math/yd9hlhrj.png" />, 
+                bits,
+                moving along the stream of data until all of the data 
+                has been processed. This is illustrated below.
+            </p>
+
+            <h3>Encoding With a Sliding Window</h3>
+            <div id="sw_encoding" class="playground">
+                <div class="bitstring">
+                    <div class="bit not_last_bit pad">0</div><!--
+                    --><div class="bit not_last_bit pad">0</div><!--
+                    --><div class="bit not_last_bit pad">0</div><!--
+                    --><div class="bit not_last_bit pad">0</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit not_last_bit">0</div><!--
+                    --><div class="bit not_last_bit">1</div><!--
+                    --><div class="bit">1</div>
+                </div>
+                <div class="window">
+                    <div class="cells">
+                        <div class="window_cell cf"></div><!--
+                        --><div class="window_cell c1"></div><!--
+                        --><div class="window_cell c2"></div><!--
+                        --><div class="window_cell c3"></div><!--
+                        --><div class="window_cell cl"></div>
+                    </div>
+                    <div class="eqn_list">
+                        <div class="eqn">
+                            <span class="eqn_coef">1</span>*<span class="eqn_c0">1</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c1">0</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c2">0</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c3">1</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c4">0</span> 
+                            = <span class="answer"></span>
+                        </div>
+                        <div class="eqn">
+                            <span class="eqn_coef">1</span>*<span class="eqn_c0">1</span> +
+                            <span class="eqn_coef">0</span>*<span class="eqn_c1">0</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c2">0</span> +
+                            <span class="eqn_coef">0</span>*<span class="eqn_c3">1</span> +
+                            <span class="eqn_coef">1</span>*<span class="eqn_c4">0</span> 
+                            = <span class="answer"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="encoded_cont">
+                    Encoded Message: <span class="message"></span>
+                </div>
+            </div>
+
+            <p class="text_block">
+                In the above example, our constraint length,
+                <img src="math/yd9hlhrj.png" />,
+                is 5 and we are encoding with two polynomials:<br>
+                <img src="math/y8e4ugzy.png" />, and
+                <img src="math/ydb4no88.png" /> <br>
+                Where 
+                <img src="math/y9den4m6.png" style="vertical-align: bottom;" />
+                denotes
+                <img src="math/5ldlsl.png" />
+                bit positions before the position of the right end of the 
+                slider,
+                <img src="math/y8pkcxg2.png" />.
+                We start with 
+                four padding bits shown with grey borders. This 
+                ensures that the first collection of encoded bits are <em>
+                transitioning</em> from the state 00. We will see later how 
+                this helps with decoding. With two polynomials, we would expect
+                our rate to be 1/2. and indeed the 15 data bits in the example
+                are encoded as a 30 bit message.
+            </p>
+
+            <p class="text_block">
+                Generally speaking, the longer the constraint length (sometimes 
+                called the window size), the more resilient the code is to 
+                bit errors, but also the longer it will take to decode. 
+                Similarly, the larger the inverse rate, the more resilient the 
+                code will be to bit errors, but also the less efficient the 
+                coding will be. These are tradeoffs that need to be balanced 
+                based on the specific application. 
+            </p>
+
+            <p class="text_block">
+                In the demo below, play around with adjusting the inverse rate, 
+                constraint length, and error probability, and observe how the 
+                decoding time and resiliency react.
+            </p>
+
+            <h3>Tuning Parameters</h3>
+            <div id="tuning" class="playground">
+                <div id="constraint_length_selection" class="selection_menu">
+                    <p class="parameter_name">
+                        Constraint Length 
+                        (<img src="math/yd9hlhrj.png" />):
+                    </p>
+                    <a href="#" class="menu_button f" id="k_3">3</a><!--
+                    --><a href="#" class="menu_button" id="k_4">4</a><!--
+                    --><a href="#" class="menu_button sel" id="k_5">5</a><!--
+                    --><a href="#" class="menu_button" id="k_6">6</a><!--
+                    --><a href="#" class="menu_button l" id="k_7">7</a>
+                </div>
+                <div id="inverse_rate_selection" class="selection_menu">
+                    <p class="parameter_name">
+                        Inverse Rate 
+                        (<img src="math/375ggas.png" />):
+                    </p>
+                    <a href="#" class="menu_button f" id="r_1">2</a><!--
+                    --><a href="#" class="menu_button sel" id="r_2">3</a><!--
+                    --><a href="#" class="menu_button" id="r_3">4</a><!--
+                    --><a href="#" class="menu_button" id="r_4">5</a><!--
+                    --><a href="#" class="menu_button l" id="r_5">6</a>
+                </div>
+                <div id="channel_noise_selection" class="selection_slider">
+                    <p class="parameter_name">
+                        Channel Error 
+                        (<img src="math/y74dclzg.png" />):
+                    </p>
+                    <p class="slider_cont">
+                        <input 
+                            type="range" min="0" max="500" value="350" 
+                            id="tun_p" onchange="set_probability()"
+                            oninput="set_probability()"
+                        />
+                        <span class="slider_bound" id="tun_p_val">0.05</span>
+                    </p>
+                </div>
+                <div id="initiate_transfer_cont">
+                    <a class="transfer_button" id="transfer_url" href="#">
+                        <span class="typ">Transfer a Name</span><span class="sz">(80 bits)</span>
+                    </a>
+                    <a class="transfer_button" id="transfer_lyrics" href="#">
+                        <span class="typ">Transfer a URL</span><span class="sz">(352 bits)</span>
+                    </a>
+                    <a class="transfer_button" id="transfer_image" href="#">
+                        <span class="typ">Transfer an Email</span><span class="sz">(5,121 bits)</span>
+                    </a>
+                </div>
+                <div id="visualize_transfer_cont">
+                    <p id="viz_encode">
+                        <span class="tns_title">Encoding</span><br>
+                        time <span class="tns_time">0:00</span>,
+                        <span class="tns_err">0.0%</span> error
+                    </p>
+                    <div class="transmission_progress">
+                        <div id="enc_cor" class="correct_bar"></div>
+                        <div id="enc_err" class="error_bar"></div>
+                    </div>
+                    <p id="viz_decode">
+                        <span class="tns_title">Decoding</span><br>
+                        time <span class="tns_time">0:00</span>,
+                        <span class="tns_err">0.0%</span> error
+                    </p>
+                    <div class="transmission_progress">
+                        <div id="dec_cor" class="correct_bar"></div>
+                        <div id="dec_err" class="error_bar"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="text_block">
+                I urge you not to take the absolute speeds too seriously. My 
+                <a href="convolutional_codes.js">javascript implementation</a>
+                of the Viterbi algorithm (to be discussed) 
+                leaves a lot to be desired in terms of runtime optimization. 
+                The point was rather to convey some intuition about the 
+                relationship between the parameters and code performance.
+            </p>
+
+            <p>
+                When constructing a convolutional code, the polynomials 
+                themselves, not just the number of them, is highly influential
+                to the overall quality of the code. Given a constraint length 
+                of 5 and an inverse rate of 3, experiment with different 
+                polynomial coefficents and observe the resulting rates.
+                What happens when two polynomials are the same? What about 
+                when one of the polynomials is all zero? Why? (You can flip 
+                coefficient bits by clicking on them)
+            </p>
+
+            <h3>The Effect of the Polynomials</h3>
+            <div id="polys" class="playground">
+                <div id="channel_noise_selection" class="selection_slider">
+                    <div id="polynomial_selection_cont">
+                        <div class="polynomial" id="poly1">
+                            <span class="polyname">P1</span>
+                            <a id="polybit_00" class="bit nl" href="#">1</a><!--
+                            --><a id="polybit_01" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_02" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_03" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_04" class="bit nf" href="#">1</a>
+                        </div>
+                        <div class="polynomial" id="poly2">
+                            <span class="polyname">P2</span>
+                            <a id="polybit_10" class="bit nl" href="#">1</a><!--
+                            --><a id="polybit_11" class="bit nf nl" href="#">0</a><!--
+                            --><a id="polybit_12" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_13" class="bit nf nl" href="#">0</a><!--
+                            --><a id="polybit_14" class="bit nf" href="#">1</a>
+                        </div>
+                        <div class="polynomial" id="poly3">
+                            <span class="polyname">P3</span>
+                            <a id="polybit_20" class="bit nl" href="#">0</a><!--
+                            --><a id="polybit_21" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_22" class="bit nf nl" href="#">0</a><!--
+                            --><a id="polybit_23" class="bit nf nl" href="#">1</a><!--
+                            --><a id="polybit_24" class="bit nf" href="#">0</a>
+                        </div>
+                    </div>
+                    <p class="parameter_name">
+                        Channel Error 
+                        (<img src="math/y74dclzg.png" />):
+                    </p>
+                    <p class="slider_cont">
+                        <input 
+                            type="range" min="0" max="500" value="350" 
+                            id="ptun_p" onchange="pset_probability()"
+                            oninput="pset_probability()"
+                        />
+                        <span class="slider_bound" id="ptun_p_val">0.05</span>
+                    </p>
+                </div>
+                <div id="initiate_transfer_cont">
+                    <a class="transfer_button" id="ptransfer_url" href="#">
+                        <span class="typ">Transfer URL</span><span class="sz">(352 bits)</span>
+                    </a>
+                </div>
+                <div id="pvisualize_transfer_cont">
+                    <p id="pviz_encode">
+                        <span class="tns_title">Encoding</span><br>
+                        time <span class="tns_time">0:00</span>,
+                        <span class="tns_err">0.0%</span> error
+                    </p>
+                    <div class="transmission_progress">
+                        <div id="penc_cor" class="correct_bar"></div>
+                        <div id="penc_err" class="error_bar"></div>
+                    </div>
+                    <p id="pviz_decode">
+                        <span class="tns_title">Decoding</span><br>
+                        time <span class="tns_time">0:00</span>,
+                        <span class="tns_err">0.0%</span> error
+                    </p>
+                    <div class="transmission_progress">
+                        <div id="pdec_cor" class="correct_bar"></div>
+                        <div id="pdec_err" class="error_bar"></div>
+                    </div>
+                </div>
+
+            </div>
+        
+            <p class="text_block">
+                As you can see, clearly the choice for polynomials has a 
+                significant effect on error correction, but how do we choose
+                good polynomials? Selecting polynomials is outside the scope of
+                our discussion, but a good reference on the subject can be 
+                found <a href="https://link.springer.com/article/10.1007/s40314-014-0202-3">here</a>.
+            </p>
+    
+            <p class="text_block">
+                There are two prevailing ways to visualize convolutional codes:
+                the first is as a <em>block diagram</em>, where one wires 
+                together the various "registers" involved with computing each
+                parity bit. The second is as a <em>state machine</em>, where 
+                one imagines the encoder as a set of states with well-defined 
+                transitions between them, depending on the data that is 
+                encountered. An animation of each of these is shown below. 
+            </p>
+
+            <h3>Visualizing the Encoding Process</h3>
+            <div class="playground">
+                    <img src="state_machine.png" height=220 />
+                    <img src="block_diagram.png" height=220 />
+            </div>        
+
+            <p class="text_block">
+                Both are valid interpretations of the encoding process, but 
+                state machines are a particularly useful construct when 
+                learning about the <em>decoding</em> process, which we discuss 
+                next.
+            </p>
+    
+            <h2>Decoding</h2>
+            <p class="text_block">
+                To decode a convolutional code is to determine which sequence
+                of data bits were <em>most likely</em> sent given the parity 
+                bits that were received. If our problem has a symmetric bit 
+                error probability 
+                <img src="math/yaeksruq.png" 
+                style="vertical-align: middle;" />,
+                then this amounts to finding the data string whose correct 
+                parity bits have the smallest Hamming distance from the bits 
+                that were received.
+            </p>
+
+            <p class="text_block">
+                One possible approach to this is brute force: simply enumerate
+                all possible data strings, compute their parity bits, and 
+                select the closest one to what you received. Unfortunately, 
+                the computational complexity of this is 
+                <img src="math/yahnwuhq.png" 
+                style="vertical-align: middle;" />,
+                meaning that even for small packets of information, it will be
+                <b>far</b> too slow.
+            </p>
+    
+            <h3>Exponential Complexity</h3>
+            <div class="playground">
+                <iframe width="560" height="315" 
+                src="https://www.youtube.com/embed/D9DvjkMMULw?end=104&start=23" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+            </div>
+
+            <p class="text_block">
+                The algorithm used for efficiently decoding convolutional codes
+                was invented by Andrew Viterbi in 1967, although it has been 
+                independently discovered at least 7 different times. Its key 
+                insight is to aggregate the errors that would have had to occur
+                incrementally while receiving the messages, and discard series
+                as soon as it's clear that they are not the minimum distance. 
+            </p>
+    
+            <p class="text_block">
+                The data structure used to formalize the decoding problem is 
+                called a <em>trellis</em>, which is a special type of graph 
+                that arises from state machines. It consists of a collection of 
+                nodes for each time step, each with directed edges only to 
+                those nodes at the next time step for which they have a 
+                possible transition to.
+            </p>
+
+            <p class="text_block">
+                The illustration below is a subgraph of the trellis. The solid 
+                edges represent the true state changes, and the dotted edges 
+                represent the other state change that was possible if a 
+                different bit was encountered by the sliding window at that 
+                step. The red corresponds to the parity bits that the encoding
+                system "emits" when encoding the data.
+            </p>
+    
+
+            <h3>Trellis Generation</h3>
+            <div class="playground">
+                <img src="trellis.png" height=260 />
+            </div>
+
+            <p class="text_block">
+                Given a received message with errors, the algorithm works by 
+                assigning to each state in the next step of the trellis a cost,
+                found by summing the minimum cost to the previous state plus 
+                the cost of the transition (the Hamming distance between what
+                was emitted and what was observed). If there are two paths to a
+                particular state, discard the most costly one. This is 
+                continued until the end of the received message, and the path 
+                to the final state with the least cost is selected. An 
+                illustration of this is shown below.
+            </p>
+
+            <h3>Choose Closest Valid Path</h3>
+            <div id="decode" class="playground">
+                <img src="dc1.png" height=250 />
+                <img src="dct.png" height=50 />
+                <img src="dc2.png" height=250 />
+            </div>
+
+            <p class="text_block">
+                The Viterbi algorithm occupies an important place in signal 
+                processing, not just because of its use to decode convolutional
+                codes, but also because it can be used to find 
+                maximum-likelihood paths in all sorts of finite state models 
+                (e.g. Hidden Markov Models, or soft convolutional codes).
+            </p>
+
+            <h2>Conclusion</h2>
+            <p class="text_block">
+                This concludes our discussion of encoding and decoding 
+                convolutional codes. As I mentioned in my introduction, turbo
+                codes have started to overtake convolutional codes in everyday
+                use, but convolutional codes occupy and important part of the 
+                history of error correcting codes, and they serve as an 
+                educational example regarding the importance of fast algorithms
+                to effective technology. Without them, digital communication as 
+                we know it would not be possible.
+            </p>
+
+            <h3>References</h3>
+            <p class="text_block">
+                La Guardia, Giuliano G. "Convolutional codes: techniques of 
+                construction." <em>Computational and Applied Mathematics 
+                35.2</em> (2016): 501-517.
+                <br><br>
+                Balakrishan, Hari. White, Jacob. "Convolutional Coding" <em>
+                DRAFT Lecture Notes, MIT 6.02 Fall 2010</em> (2010): 1-8
+                <br><br>
+                Nickerson, Mike. “Exponential Growth.” <em>YouTube</em>, 
+                YouTube, 2 July 2010, <a href="www.youtube.com/watch?v=D9DvjkMMULw">www.youtube.com/watch?v=D9DvjkMMULw</a>.
+            </p>
+        </div>
+    </body>
+</html>

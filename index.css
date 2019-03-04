@@ -84,7 +84,7 @@ p.pub span.authors span.me {
 }
 p.pub span.venue {
 	font-size: 0.8em;
-	line-height:200%;
+	padding-bottom: 0.8em;
 }
 p.pub span.anchor{
 	font-size: 0.9em;

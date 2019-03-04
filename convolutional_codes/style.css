@@ -1,0 +1,391 @@
+/* Whole Document */
+html {
+    font-size: 14px;
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    width: 800px;
+}
+
+/* Title Block */
+h1 {
+    font-size: 50px;
+    padding-top: 30px;
+    padding-bottom: -20px;
+    padding-left: 10px;
+}
+p.tld {
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 1.3;
+    padding-left: 10px;
+}
+
+/* General Content */
+div.content {
+    width: 775px;
+    padding-left: 25px;
+}
+h2 {
+    font-size: 30px;
+    line-height: 0;
+    padding-top: 20px;
+}
+h3 {
+    font-weight: 300;
+    font-size: 22px;
+}
+div.playground {
+    width: 730px;
+    padding: 10px;
+    margin: 0;
+    border: 0;
+    margin-left: 10px;
+}
+p img {
+    vertical-align: center;
+}
+p.text_block a {
+    text-decoration: none;
+}
+
+/* Sliding Window Playground */
+div#sw_encoding {
+    position: relative;
+    height: 160px;
+}
+div#sw_encoding div.bitstring {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+div#sw_encoding div.bit {
+    height: 30px; 
+    width: 30px;
+    border: 2px black solid;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20;
+    font-weight: lighter;
+}
+div#sw_encoding div.not_last_bit {
+    border-right: none;
+}
+div#sw_encoding div.bit.pad {
+    border-color: grey;
+}
+div#sw_encoding div.window {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+div#sw_encoding div.window div.window_cell {
+    height: 34px;
+    width: 34px;
+    border: 2px red solid;
+    display:inline-block;
+}
+div#sw_encoding div.window div.window_cell:not(.cf) {
+    border-left: none;
+}
+div#sw_encoding div.window div.window_cell:not(.cl) {
+    border-right: none;
+    width: 32px;
+}
+div#sw_encoding div.window {
+    -webkit-transition: left 0.75s ease-out;
+    transition: left 0.75s;
+    /* transition-timing-function: ease-in; */
+}
+div#sw_encoding div.window div.eqn_list {
+    padding-top: 20px;
+}
+div#sw_encoding div.window div.eqn_list div.eqn {
+    font-size: 20px;
+    font-weight: lighter;
+    padding-bottom: 5px;
+}
+div.encoded_cont {
+    position: absolute;
+    top:130px;
+    left: 0;
+    font-size: 18px;
+}
+
+/* Tuning Playground */
+div#tuning {
+    position: relative;
+    height: 260px;
+    padding-top: 0px;
+}
+div.constraint_length_selection {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+div#tuning p.parameter_name {
+    margin: 0;
+    font-size: 15px;
+}
+div#tuning p.slider_cont {
+    padding-top: 10px;
+    margin: 0;
+    font-size: 18px;
+}
+div#tuning p.slider_cont * {
+    vertical-align: middle;
+}
+div#tuning a.menu_button {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-decoration: none;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px rgb(90, 87, 87) solid;
+    color: rgb(90, 87, 87);
+    margin-top:10px;
+    margin-bottom:15px;
+}
+div#tuning a.menu_button:not(.f) {
+    border-left: none;
+}
+div#tuning a.menu_button.f {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+div#tuning a.menu_button.l {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+div#tuning a.menu_button.sel {
+    background-color: rgb(102, 201, 56);
+    color: black;
+}
+div#tuning div#initiate_transfer_cont {
+    position: absolute;
+    left: 310px;
+    top: 10px;
+    width: 200px;
+}
+
+div#tuning div#initiate_transfer_cont a {
+    display: block;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    margin: 10px 0;
+    text-align:center;
+    background-color: #d4e2b4;
+    border: 1px solid black;
+    border-radius: 25px;
+    height: 40px;
+    width: 200px;
+    line-height: 40px;
+}
+div#tuning div#initiate_transfer_cont a span.sz {
+    display: none;
+}
+div#tuning div#initiate_transfer_cont a span.typ {
+    display: inline;
+}
+div#tuning div#initiate_transfer_cont a:hover {
+    background-color: rgb(102, 201, 56);
+    color: white;
+    border-color: white;
+}
+div#tuning div#initiate_transfer_cont a:hover span.typ {
+    display: none;
+}
+div#tuning div#initiate_transfer_cont a:hover span.sz {
+    display: inline;
+}
+div#tuning div#visualize_transfer_cont {
+    position: absolute;
+    top: 0;
+    left: 550px;
+    width: 200px;
+}
+div#tuning div#visualize_transfer_cont p {
+    width: 200px;
+    text-align: center;
+}
+div#tuning div#visualize_transfer_cont p span.tns_title {
+    font-size: 20px;
+}
+div#tuning div#visualize_transfer_cont p span.tns_time {
+    color: rgb(85, 85, 85);
+}
+div#tuning div#visualize_transfer_cont p span.tns_err {
+    color: rgb(161, 40, 40);
+}
+div#tuning div#visualize_transfer_cont p#viz_encode {
+    position: absolute;
+    top: 0;
+}
+div#tuning div#visualize_transfer_cont p#viz_decode {
+    position: absolute;
+    top: 100px;
+}
+div#tuning div#visualize_transfer_cont div.correct_bar {
+    width: 50%;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    background-color: rgb(137, 192, 132);
+}
+div#tuning div#visualize_transfer_cont div.error_bar {
+    width: 50%;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    background-color: rgb(211, 159, 159);
+}
+div#enc_cor, div#enc_err {
+    top: 70px;
+}
+div#dec_cor, div#dec_err {
+    top: 170px;
+}
+
+
+/* Tuning Playground */
+div#polys {
+    position: relative;
+    height: 220px;
+    padding-top: 0px;
+}
+div#polys p.parameter_name {
+    margin: 0;
+    font-size: 15px;
+}
+div#polys p.slider_cont {
+    padding-top: 10px;
+    margin: 0;
+    font-size: 18px;
+}
+div#polys p.slider_cont * {
+    vertical-align: middle;
+}
+div#polys div#initiate_transfer_cont {
+    position: absolute;
+    left: 290px;
+    top: 10px;
+    width: 200px;
+}
+
+div#polys div#initiate_transfer_cont a {
+    display: block;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    margin: 10px 0;
+    text-align:center;
+    background-color: #d4e2b4;
+    border: 1px solid black;
+    border-radius: 25px;
+    height: 40px;
+    width: 200px;
+    line-height: 40px;
+}
+div#polys div#initiate_transfer_cont a span.sz {
+    display: none;
+}
+div#polys div#initiate_transfer_cont a span.typ {
+    display: inline;
+}
+div#polys div#initiate_transfer_cont a:hover {
+    background-color: rgb(102, 201, 56);
+    color: white;
+    border-color: white;
+}
+div#polys div#initiate_transfer_cont a:hover span.typ {
+    display: none;
+}
+div#polys div#initiate_transfer_cont a:hover span.sz {
+    display: inline;
+}
+div#polys div#pvisualize_transfer_cont {
+    position: absolute;
+    top: -20px;
+    left: 550px;
+    width: 200px;
+}
+div#polys div#pvisualize_transfer_cont p {
+    width: 200px;
+    text-align: center;
+}
+div#polys div#pvisualize_transfer_cont p span.tns_title {
+    font-size: 20px;
+}
+div#polys div#pvisualize_transfer_cont p span.tns_time {
+    color: rgb(85, 85, 85);
+}
+div#polys div#pvisualize_transfer_cont p span.tns_err {
+    color: rgb(161, 40, 40);
+}
+div#polys div#pvisualize_transfer_cont p#pviz_encode {
+    position: absolute;
+    top: 0;
+}
+div#polys div#pvisualize_transfer_cont p#pviz_decode {
+    position: absolute;
+    top: 100px;
+}
+div#polys div#pvisualize_transfer_cont div.correct_bar {
+    width: 50%;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    background-color: rgb(137, 192, 132);
+}
+div#polys div#pvisualize_transfer_cont div.error_bar {
+    width: 50%;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    background-color: rgb(211, 159, 159);
+}
+div#penc_cor, div#penc_err {
+    top: 70px;
+}
+div#pdec_cor, div#pdec_err {
+    top: 170px;
+}
+div#polys a.bit {
+    height: 30px; 
+    width: 30px;
+    border: 2px black solid;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20;
+    font-weight: lighter;
+    color: black;
+    text-decoration: none;
+}
+div#polys a.bit.nf {
+    border-left: none;
+}
+
+div#polys div.polynomial {
+    padding-bottom: 10px;
+}
+div#polys span.polyname {
+    padding-right: 10px;
+}
+div#polys p.parameter_name {
+    padding-top: 20px;
+}
+div#polys a.bit:hover {
+    background-color: rgb(161, 187, 149);
+}
+
+/* Decoding Style */
+div#decode * {
+    vertical-align: middle;
+}
