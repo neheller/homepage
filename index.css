@@ -125,3 +125,7 @@ div#right_cont h1.not_first {
 		width:100%;
 	}
 }
+
+img.old {
+	display: none;
+}
