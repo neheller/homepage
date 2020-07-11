@@ -40,6 +40,7 @@ nav ul li a {
 	-webkit-transition: border-color 0.3s, padding 0.3s, color 0.3s;
 	transition: border-color 0.3s, padding 0.3s, color 0.3s;
 	margin:0 auto;
+	vertical-align: middle;
 }
 
 nav ul li a.sel {
