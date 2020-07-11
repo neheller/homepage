@@ -129,3 +129,14 @@ div#right_cont h1.not_first {
 img.old {
 	display: none;
 }
+
+p.social_icons img {
+	filter: grayscale(100%) brightness(200%);
+	-webkit-transition: filter 0.4s;
+	transition: filter 0.4s;
+}
+
+p.social_icons img:hover {
+	filter: grayscale(0%) brightness(130%);
+	/* filter: brightness(10%) hue-rotate(180deg); */
+}
